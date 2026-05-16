@@ -1,0 +1,19 @@
+1. Enable I2C
+
+sudo raspi-config
+
+Interface Options → I2C → Enable
+
+2. Venv
+
+sudo apt update
+sudo apt install -y i2c-tools python3-pip python3-venv
+i2cdetect -y 1
+
+mkdir imu_llm_lab
+cd imu_llm_lab
+
+python3 -m venv .venv
+source .venv/bin/activate
+
+pip install smbus2 numpy matplotlib requests
