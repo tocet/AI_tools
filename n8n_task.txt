@@ -9,4 +9,6 @@
 7. przesłanie danych po mqqt i generowanie zapytania do modelu tylko w przypadku jeżeli stanowisko jest obsadzone - infromacja dla osoby, że nie powinna podjąć pracy
 
 
+WiFi: Szkolenia / Doktorzec1
+
 
