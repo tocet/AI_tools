@@ -1,0 +1,12 @@
+1. Ollama + model
+2. node-RED
+- odbieranie danych z czujników po MQTT - BMP280, BH1750 + ESP32
+3. n8n
+-  komunikacja po webhook z modelem
+4. wygenerowanie prompta w node-RED zawierającego dane o nat. oświetlenie i temperaturze z zapytaniem czy warunki na stanowisku pracy są odpowiednie
+5. wyswietlenie odpowiedzi w node-RED
+6. rozpoznanie czy jest osoba na stanowisku pracy - AI groove model
+7. przesłanie danych po mqqt i generowanie zapytania do modelu tylko w przypadku jeżeli stanowisko jest obsadzone - infromacja dla osoby, że nie powinna podjąć pracy
+
+
+
