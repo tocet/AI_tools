@@ -1,0 +1,326 @@
+[
+    {
+        "id": "8c461fb3460d420b",
+        "type": "tab",
+        "label": "ai_n8n",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "337f08a49243c1a4",
+        "type": "ui-text-input",
+        "z": "8c461fb3460d420b",
+        "group": "03453a112ddc72a3",
+        "name": "input_prompt",
+        "label": "enter prompt",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "topic": "prompt",
+        "topicType": "flow",
+        "mode": "text",
+        "tooltip": "",
+        "delay": 300,
+        "passthru": true,
+        "sendOnDelay": false,
+        "sendOnBlur": true,
+        "sendOnEnter": true,
+        "className": "",
+        "clearable": false,
+        "sendOnClear": false,
+        "icon": "",
+        "iconPosition": "left",
+        "iconInnerPosition": "inside",
+        "x": 180,
+        "y": 80,
+        "wires": [
+            [
+                "2aeaa2ee07e03b06",
+                "412cfd070ee813e5"
+            ]
+        ]
+    },
+    {
+        "id": "f429cb380f510020",
+        "type": "ui-button",
+        "z": "8c461fb3460d420b",
+        "group": "03453a112ddc72a3",
+        "name": "send_prompt",
+        "label": "send prompt",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "emulateClick": false,
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "iconPosition": "left",
+        "payload": "",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "buttonColor": "",
+        "textColor": "",
+        "iconColor": "",
+        "enableClick": true,
+        "enablePointerdown": false,
+        "pointerdownPayload": "",
+        "pointerdownPayloadType": "str",
+        "enablePointerup": false,
+        "pointerupPayload": "",
+        "pointerupPayloadType": "str",
+        "x": 170,
+        "y": 240,
+        "wires": [
+            [
+                "50b38571bd2f4298"
+            ]
+        ]
+    },
+    {
+        "id": "2aeaa2ee07e03b06",
+        "type": "change",
+        "z": "8c461fb3460d420b",
+        "name": "AI prompt",
+        "rules": [
+            {
+                "t": "set",
+                "p": "prompt",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "50b38571bd2f4298",
+        "type": "function",
+        "z": "8c461fb3460d420b",
+        "name": "prompt2JSON",
+        "func": "let p = flow.get(\"prompt\") || \"\";\n\nmsg.headers = {\n    \"Content-Type\": \"application/json\"\n};\n\nmsg.payload = {\n    prompt: p,\n    context: {\n        source: \"node-red\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 240,
+        "wires": [
+            [
+                "2b9c0821ae834a97",
+                "b60015d97f01c918"
+            ]
+        ]
+    },
+    {
+        "id": "2b9c0821ae834a97",
+        "type": "http request",
+        "z": "8c461fb3460d420b",
+        "name": "",
+        "method": "POST",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "http://localhost:5678/webhook-test/61c14233-813e-4d08-bbb1-35ca7652b3ad",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 470,
+        "y": 340,
+        "wires": [
+            [
+                "a1688d7cdaf36d60"
+            ]
+        ]
+    },
+    {
+        "id": "a1688d7cdaf36d60",
+        "type": "function",
+        "z": "8c461fb3460d420b",
+        "name": "http_request_LLMreply",
+        "func": "msg.payload = msg.payload.answer || \"No response\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 340,
+        "wires": [
+            [
+                "96e54dc723b2dc1f"
+            ]
+        ]
+    },
+    {
+        "id": "412cfd070ee813e5",
+        "type": "debug",
+        "z": "8c461fb3460d420b",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "b60015d97f01c918",
+        "type": "debug",
+        "z": "8c461fb3460d420b",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 580,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "96e54dc723b2dc1f",
+        "type": "ui-text",
+        "z": "8c461fb3460d420b",
+        "group": "03453a112ddc72a3",
+        "order": 1,
+        "width": "6",
+        "height": "6",
+        "name": "SLM_response",
+        "label": "SLM response",
+        "format": "{{msg.payload}}",
+        "layout": "row-spread",
+        "style": false,
+        "font": "",
+        "fontSize": 16,
+        "color": "#717171",
+        "wrapText": true,
+        "className": "",
+        "value": "payload",
+        "valueType": "msg",
+        "x": 700,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "03453a112ddc72a3",
+        "type": "ui-group",
+        "name": "SLM prompting",
+        "page": "aa38e563dbe7082f",
+        "width": 6,
+        "height": 1,
+        "order": 1,
+        "showTitle": true,
+        "className": "",
+        "visible": "true",
+        "disabled": "false",
+        "groupType": "default"
+    },
+    {
+        "id": "aa38e563dbe7082f",
+        "type": "ui-page",
+        "name": "n8n",
+        "ui": "9b021cd5897174e5",
+        "path": "/page2",
+        "icon": "home",
+        "layout": "grid",
+        "theme": "c72d3f9494e0a8c4",
+        "breakpoints": [
+            {
+                "name": "Default",
+                "px": "0",
+                "cols": "3"
+            },
+            {
+                "name": "Tablet",
+                "px": "576",
+                "cols": "6"
+            },
+            {
+                "name": "Small Desktop",
+                "px": "768",
+                "cols": "9"
+            },
+            {
+                "name": "Desktop",
+                "px": "1024",
+                "cols": "12"
+            }
+        ],
+        "order": 1,
+        "className": "",
+        "visible": "true",
+        "disabled": "false"
+    },
+    {
+        "id": "9b021cd5897174e5",
+        "type": "ui-base",
+        "name": "My Dashboard",
+        "path": "/dashboard",
+        "appIcon": "",
+        "includeClientData": true,
+        "acceptsClientConfig": [
+            "ui-notification",
+            "ui-control"
+        ],
+        "showPathInSidebar": false,
+        "headerContent": "page",
+        "navigationStyle": "default",
+        "titleBarStyle": "default",
+        "showReconnectNotification": true,
+        "notificationDisplayTime": 1,
+        "showDisconnectNotification": true,
+        "allowInstall": false
+    },
+    {
+        "id": "c72d3f9494e0a8c4",
+        "type": "ui-theme",
+        "name": "Default Theme",
+        "colors": {
+            "surface": "#ffffff",
+            "primary": "#0094CE",
+            "bgPage": "#eeeeee",
+            "groupBg": "#ffffff",
+            "groupOutline": "#cccccc"
+        },
+        "sizes": {
+            "density": "default",
+            "pagePadding": "12px",
+            "groupGap": "12px",
+            "groupBorderRadius": "4px",
+            "widgetGap": "12px"
+        }
+    },
+    {
+        "id": "30e9f23c3106bf34",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "@flowfuse/node-red-dashboard": "1.30.2"
+        }
+    }
+]
