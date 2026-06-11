@@ -1,0 +1,1 @@
+Wykorzystac wybrany model jezykowy do analizy warunkow panujacych na stanowisku pracy. Model powinien dokonac analizy czy temperatura jest wlasciwa. Jezeli nie jest wlasciwa powinen okreslic zalecenia dla pracodawcy.
